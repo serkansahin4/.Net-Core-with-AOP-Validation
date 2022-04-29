@@ -1,0 +1,37 @@
+﻿using Castle.DynamicProxy;
+using Core.CrossCuttingConcern.Validation;
+using Core.Utilities.Interceptors;
+using FluentValidation;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Core.Aspects.Autofac.Validation
+{
+    public class ValidationAspect:MethodInterception
+    {
+        private Type _validatorType;
+
+        public ValidationAspect(Type validatorType)
+        {
+            if (!typeof(IValidator).IsAssignableFrom(validatorType))
+            {
+                throw new Exception("Doğru bir validator giriniz.");
+            }
+            _validatorType = validatorType;
+        }
+
+        protected override void OnBefore(IInvocation ınvocation)
+        {
+            var validator = (IValidator)Activator.CreateInstance(_validatorType);
+            var entityType = _validatorType.BaseType.GetGenericArguments()[0];
+            var entities = ınvocation.Arguments.Where(x => x.GetType() == entityType);
+            foreach (var entity in entities)
+            {
+                ValidationTool.Validate(validator, entity);
+            }
+        }
+    }
+}

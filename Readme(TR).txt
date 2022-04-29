@@ -6,8 +6,8 @@
 İş katmanındaki metodlarımızın içerisinde yaptığımız validasyonlar, bellekleme, loglama
 gibi işlemler, SOLID Prensiplerinin S harfine yani (Single Responsibilty=Tek Sorumluluk) ye aykırıdır.
 Bu yüzden, Metod içeriğine dokunarak, o metodun tek sorumluluk ilkesini ihlal etmek yerine, 
-Yaptırmamız gereken CCC işlemlerini, metod içeriğine dokunmadan, AOP ile
-IL(Intermediate Language)(Uygulamanın exe ve dll lere ayrıldığı kısım) Zamanında yaptırarak, sonradan
+Yaptırmamız gereken CCC işlemlerini, metod içeriğine dokunmadan, AOP ile Compiler Time(Derleme zamanında)
+IL(Intermediate Language)(Uygulamanın exe ve dll lere ayrıldığı kısım) koda dönüştürerek, sonradan
 koda dahil etmeliyiz.
 
 Bu tarz validasyon işlemleri yada CCC dediğimiz (Cross Cutting Concern) mimariyi dikine
